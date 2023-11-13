@@ -12,6 +12,8 @@ class Renderer {
         box.style.left = "20px";
         box.style.width = "20px";
         box.style.height = "20px";
+        box.style.borderRadius = "50%";
+
         box.style.backgroundColor = "red";
 
         this.element.appendChild(box);
@@ -23,23 +25,24 @@ class Renderer {
 }
 
 class Box {
-    constructor() {
+    constructor(speedMultiplier = 20) {
         this.position = 0;
         this.speed = 0;
+        this.speedMultiplier = speedMultiplier;
     }
     runLoop(deltaTime) {
-        this.speed += 9.81 * deltaTime;
+        this.speed += 9.81 * deltaTime * this.speedMultiplier;
         this.position += this.speed * deltaTime;
     }
     moveUp() {
-        this.speed = -20;
+        this.speed = -7.5 * this.speedMultiplier;
     }
 }
 
 class Game {
     constructor(element) {
         this.renderer = new Renderer(element);
-        this.box = new Box();
+        this.box = new Box(35);
         this.element = element;
         this.isRunning = true;
         this.setup();
