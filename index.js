@@ -27,9 +27,9 @@ class Box {
         this.position = 0;
         this.speed = 0;
     }
-    runLoop() {
-        this.speed++;
-        this.position += this.speed;
+    runLoop(deltaTime) {
+        this.speed += 9.81 * deltaTime;
+        this.position += this.speed * deltaTime;
     }
     moveUp() {
         this.speed = -20;
@@ -52,6 +52,31 @@ class Game {
     }
 
     start() {
+        let lastTime = performance.now();
+        let counter = 0;
+        const loop = (currentTime) => {
+            let deltaTime = (currentTime - lastTime) / 1000;
+            lastTime = currentTime;
+
+            counter++; // Punktezähler erhöhen
+            this.box.runLoop(deltaTime);
+            if (this.box.position < 0) {
+                this.isRunning = false;
+                alert("Oberer Rand erreicht: Gameover, " + counter + " Punkte!");
+            }
+            if (this.box.position > this.element.clientHeight - 20) {
+                this.isRunning = false;
+                alert("Unterer Rand erreicht: Gameover, " + counter + " Punkte!");
+            }
+            if (this.isRunning) {
+                this.renderer.render(this.box.position);
+                requestAnimationFrame(loop);
+            }
+        }
+        requestAnimationFrame(loop);
+    }
+
+    start_old() {
         let counter = 0;
         let timer = setInterval(() => {
             counter++;
