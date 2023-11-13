@@ -25,7 +25,7 @@ class Renderer {
 }
 
 class Box {
-    constructor(speedMultiplier = 20) {
+    constructor(speedMultiplier = 30) {
         this.position = 0;
         this.speed = 0;
         this.speedMultiplier = speedMultiplier;
@@ -42,7 +42,7 @@ class Box {
 class Game {
     constructor(element) {
         this.renderer = new Renderer(element);
-        this.box = new Box(35);
+        this.box = new Box(40);
         this.element = element;
         this.isRunning = true;
         this.setup();
@@ -61,15 +61,15 @@ class Game {
             let deltaTime = (currentTime - lastTime) / 1000;
             lastTime = currentTime;
 
-            counter++; // Punktezähler erhöhen
+            counter++; // increase points
             this.box.runLoop(deltaTime);
             if (this.box.position < 0) {
                 this.isRunning = false;
-                alert("Oberer Rand erreicht: Gameover, " + counter + " Punkte!");
+                alert("Reached top border: Gameover, " + counter + " Points!");
             }
             if (this.box.position > this.element.clientHeight - 20) {
                 this.isRunning = false;
-                alert("Unterer Rand erreicht: Gameover, " + counter + " Punkte!");
+                alert("Reached bottom border: Gameover, " + counter + " Points!");
             }
             if (this.isRunning) {
                 this.renderer.render(this.box.position);
