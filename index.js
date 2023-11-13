@@ -75,28 +75,6 @@ class Game {
         }
         requestAnimationFrame(loop);
     }
-
-    start_old() {
-        let counter = 0;
-        let timer = setInterval(() => {
-            counter++;
-            this.box.runLoop();
-            if (this.box.position < 0) {
-                this.isRunning = false;
-                clearInterval(timer);
-                alert("Oberer Rand erreicht: Gameover, " + counter + " Punkte!");
-            }
-            if (this.box.position > this.element.clientHeight - 20) {
-                this.isRunning = false;
-                clearInterval(timer);
-                alert("Unterer Rand erreicht: Gameover, " + counter + " Punkte!");
-            }
-            if (this.isRunning) {
-                this.renderer.render(this.box.position);
-            }
-        }, 25);
-
-    }
 }
 
 let game = new Game(document.getElementById("game"));
